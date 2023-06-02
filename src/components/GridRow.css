@@ -1,0 +1,10 @@
+.attempt-row {
+    display: flex;
+}
+
+.attempt-row-cell {
+    width: 40px;
+    height: 40px;
+    border: solid black 2px;
+    display: flex;
+}
