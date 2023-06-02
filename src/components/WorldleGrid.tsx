@@ -14,7 +14,6 @@ const WorldleGrid = ({ guessLimit, targetWord }: WordleGridProps): ReactElement 
 
   return (
     <div className="wordle-grid-wrapper">
-      <h3>Worlde Grid</h3>
       {guessAttempts.map((row, index) => (
         <GridRow
           value={row}

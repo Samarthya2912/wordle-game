@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import getBackgroundColorArray from "../functions/getBackgroundColorArray";
 import "./GridRow.css";
 
 interface GridRowProps {
@@ -19,11 +18,10 @@ const GridRow = ({ value, targetWord, setGuessAttempts, setActiveAttempt, active
   const [cursorIndex, setCursorIndex] = useState<number>(0);
 
   function handleKeydown(event: KeyboardEvent) {
-    console.log(event.key);
-    if(event.key.length > 1 || !event.key.match(/[a-z]/i)) return;
+    // console.log(event.key);
 
     if(event.key === "Enter") {
-      if(cursorIndex < targetWord.length-1) return;
+      if(cursorIndex < targetWord.length) return;
 
       setActiveAttempt(activeAttempt => activeAttempt+1)
       setGuessAttempts(guessAttempts => {
@@ -31,6 +29,7 @@ const GridRow = ({ value, targetWord, setGuessAttempts, setActiveAttempt, active
         guessAttemptsCopy[activeAttempt] = attemptString;
         return guessAttemptsCopy;
       })
+      if(targetWord === attemptString) alert("You won!!!")
     }
     else if(event.key === "Backspace") {
       if(cursorIndex === 0) return;
@@ -38,7 +37,7 @@ const GridRow = ({ value, targetWord, setGuessAttempts, setActiveAttempt, active
       setAttemptString(currState => currState.substring(0, cursorIndex-1) + ' ' + currState.substring(cursorIndex));
       setCursorIndex(index => index-1)
     }
-    else if(cursorIndex < targetWord.length) {
+    else if(event.key.length === 1 && event.key.match(/[a-z]/i) && cursorIndex < targetWord.length) {
       setAttemptString(currState => currState.substring(0, cursorIndex) + event.key + currState.substring(cursorIndex + event.key.length));
       setCursorIndex((index) => index + 1);
     }   
@@ -75,7 +74,7 @@ const GridRow = ({ value, targetWord, setGuessAttempts, setActiveAttempt, active
             (char.toUpperCase() === targetWord[index].toUpperCase()? "green":"red") 
           }}
         >
-          {char+cursorIndex}
+          {char}
         </div>
       ))}
     </div>
